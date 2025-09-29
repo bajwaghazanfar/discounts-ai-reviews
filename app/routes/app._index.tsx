@@ -58,6 +58,9 @@ export default function Index() {
   console.log(functions, discounts, reviews);
   const transformData = (functionId: string) => {
     console.log(functionId, "FunctionIDDD");
+    discounts.nodes.map((x) => {
+      console.log(x.discount);
+    });
     const filteredDiscounts = discounts.nodes.filter((discount) => {
       return discount.discount.appDiscountType.functionId === functionId;
     });
