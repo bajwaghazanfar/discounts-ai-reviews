@@ -9,7 +9,15 @@
   </div>
   <div class="all-review-main">
     <div class="all-review-table"></div>
+    <div class="pagination-container">
+      <div class="pagination-wrapper">
+        <button class="page-button page-button-edge">Previous</button>
+        <div class="pagination-buttons-container"></div>
+        <button class="page-button page-button-edge">Next Page</button>
+      </div>
+    </div>
   </div>
+  <script id="reviewMainResponse"></script>
 </div>
 
 
@@ -95,9 +103,10 @@
         };
         
         
-        async function loadReviews() {
+        async function GetPaginatedReviews(currentPage,pageSize) {
           try {
-            const response = await fetch("/apps/my-custom-path?product_id={{ product.id }}", {
+            console.log(currentPage,"GetPaginatedReviews")
+             const response = await fetch(`/apps/my-custom-path?product_id={{ product.id }}&current_page=${currentPage}&page_size=${pageSize}`, {
               headers: {
                 "Content-Type": "application/json"
               }
@@ -107,22 +116,73 @@
               console.error("Proxy fetch failed:", response.statusText);
               return;
             }
-        
             const res = await response.json();
-            const allReviews = res.data.product.reviews|| [];
+            return res
+          } catch (error) {
+            console.log(error,"An unpected Error Occured")
+          }
+        }
+        async function loadReviews(currentPage = 1, pageSize = 10) {
+          try {
+            console.log(currentPage,"laodreviews")
+           
+            const data = await GetPaginatedReviews(currentPage , pageSize )
+            const allReviews = data.data.product.reviews|| [];
+            const reviewMainContainer = document.querySelector(".all-review-container")
+            reviewMainContainer.setAttribute("data-reviews", JSON.stringify(data)); 
             const reviewTable = document.querySelector(".all-review-table")
-              allReviews.forEach((review) => {
+            
+            reviewTable.innerHTML = "";
+            allReviews.forEach((review) => {
               insertTableReviewItem(review, reviewTable);
             });
-  
-               const reviewItem = reviewTable.querySelectorAll(".review-item");
+            renderPagination(data.data.meta, currentPage);
+            reviewMainContainer.querySelector(".review-overview-container").scrollTo({ top: 0, behavior: 'smooth' });
             
           } catch (error) {
             console.error("Error loading reviews:", error);
           }
         }
+        function renderPagination(meta, currentPage) {
+  const paginationButtonsContainer = document.querySelector(".pagination-buttons-container");
+  const prevBtn = document.querySelector(".page-button-edge:first-child");
+  const nextBtn = document.querySelector(".page-button-edge:last-child");
+  
+  paginationButtonsContainer.innerHTML = ""; // clear previous
+  
+  const { totalPages } = meta;
+  
+  // Create numbered buttons
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i;
+    btn.classList.add("page-button");
+    if (i === currentPage) {
+      btn.classList.add("active");
+    }
+    btn.addEventListener("click", () => {
+      console.log(i,"CLICKED BUTTON")
+      loadReviews(i); // load clicked page
+    });
+    paginationButtonsContainer.appendChild(btn);
+  }
+  
+  // Handle prev/next
+  prevBtn.disabled = currentPage === 1;
+  nextBtn.disabled = currentPage === totalPages;
+  
+  prevBtn.onclick = () => {
+    if (currentPage > 1) loadReviews(currentPage - 1);
+  };
+  
+  nextBtn.onclick = () => {
+    if (currentPage < totalPages) loadReviews(currentPage + 1);
+  };
+  }
+  
         
-        document.addEventListener("DOMContentLoaded", loadReviews);
+       document.addEventListener("DOMContentLoaded", () => loadReviews(1, 10));
+
 </script>
 
 

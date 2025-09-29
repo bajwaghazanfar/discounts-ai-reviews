@@ -12,6 +12,7 @@ export async function getPaginatedReviewsByProductId(
   page: number = 1,
   pageSize: number = 10,
 ): Promise<IPaginatedReviewsResponse> {
+  console.log(page, pageSize);
   let constructedId = "";
   if (id.includes("gid://shopify/Product")) {
     constructedId = id;
@@ -148,7 +149,7 @@ const generateReviewViaPrompt = async (
   numberOfReviews: number,
 ) => {
   const ai = new GoogleGenAI({
-    apiKey: "AIzaSyD5YLorSxx36xqfB3CjVZEPPlFG47aitfA",
+    apiKey: process.env.GOOGLE_API_KEY,
   });
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
