@@ -45,10 +45,32 @@ const initializeModal = () => {
   });
 };
 
+const initScrollElements = () => {
+  const scrollToElements = document.querySelectorAll("[data-scroll-target]");
+  console.log(scrollToElements, "SCROLLTO");
+  scrollToElements.forEach((x) => {
+    const attribute = x.getAttribute("data-scroll-target");
+    if (attribute != "") {
+      const container = document.querySelector(`.${attribute}`);
+      if (container) {
+        x.addEventListener("click", () => {
+          container.scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      }
+    }
+  });
+};
 document.addEventListener("DOMContentLoaded", (event) => {
   initializeModal();
+  initScrollElements();
 });
 document.addEventListener("initalizeModal", (event) => {
   console.log("listeninnggg");
   initializeModal();
+});
+document.addEventListener("initScrollElements", (event) => {
+  console.log("Listening on document");
+  initScrollElements();
 });

@@ -60,9 +60,10 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 export default function EditDiscount() {
   const navigation = useNavigation();
   const { data } = useLoaderData<LoaderData>();
-
+  console.log(data, "data");
   const transformReviewRowData = () => {
-    return data.reviews.map((review) => [
+    console.log(data);
+    return data.product.reviews.map((review) => [
       review.author,
       new Date(review.createdAt).toLocaleDateString(),
       review.imageUrl ? (

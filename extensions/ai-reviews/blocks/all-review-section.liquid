@@ -74,7 +74,7 @@
             <p>Share</p>
           </div>
         </div>
-        ${review.companyResponse != "" ? `<div class="review-company-reply-container">
+        ${review.companyResponse != null ? `<div class="review-company-reply-container">
         <div class="left">{% render 'link-to-child' %}</div>
         <div class="right">
           <div class="company-reply-content">
@@ -156,17 +156,16 @@
   for (let i = 1; i <= totalPages; i++) {
     const btn = document.createElement("button");
     btn.textContent = i;
+    btn.setAttribute("data-scroll-target","all-review-quick-info")
     btn.classList.add("page-button");
     if (i === currentPage) {
       btn.classList.add("active");
     }
     btn.addEventListener("click", () => {
-      console.log(i,"CLICKED BUTTON")
       loadReviews(i); // load clicked page
     });
     paginationButtonsContainer.appendChild(btn);
   }
-  
   // Handle prev/next
   prevBtn.disabled = currentPage === 1;
   nextBtn.disabled = currentPage === totalPages;
@@ -178,10 +177,14 @@
   nextBtn.onclick = () => {
     if (currentPage < totalPages) loadReviews(currentPage + 1);
   };
+
+      prevBtn.setAttribute("data-scroll-target","all-review-quick-info")
+      nextBtn.setAttribute("data-scroll-target","all-review-quick-info")
+    document.dispatchEvent(new Event("initScrollElements"));
   }
   
-        
-       document.addEventListener("DOMContentLoaded", () => loadReviews(1, 10));
+    
+document.addEventListener("DOMContentLoaded", () => loadReviews(1, 10));
 
 </script>
 

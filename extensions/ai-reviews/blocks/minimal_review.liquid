@@ -1,7 +1,7 @@
 {{ 'base.css' | asset_url | stylesheet_tag }}
 
 <div class="minimal-tp-reviews">
-  {% render 'stars' %}<button data-scroll-target="{{ section.settings.section-id }}" id="rated-amount"></button>
+  {% render 'stars' %}<button data-scroll-target="{{ block.settings.section-id }}" id="rated-amount"></button>
 </div>
 
 <script>

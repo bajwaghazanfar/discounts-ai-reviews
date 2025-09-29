@@ -106,6 +106,7 @@ b {
   outline: none;
   cursor: pointer;
   border-bottom: 1px solid var(--gray-300);
+  padding: 0px;
 }
 
 .review-overview-container {
@@ -666,14 +667,18 @@ b {
 }
 .pagination-container .pagination-wrapper .page-button {
   width: fit-content;
+  border: none;
   min-width: 80px;
   height: 40px;
   text-align: center;
   background: none;
   outline: none;
-  border: 1px solid black;
+  border-top: 1px solid var(--gray-400);
+  border-bottom: 1px solid var(--gray-400);
+  border-left: 1px solid var(--gray-400);
   border-radius: 0px;
   padding: 5px;
+  cursor: pointer;
 }
 .pagination-container .pagination-wrapper .page-button.active {
   background-color: #e4ebfe;
@@ -684,17 +689,21 @@ b {
   padding: 5px 15px;
 }
 .pagination-container .pagination-wrapper .page-button-edge:nth-child(1) {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   border-right: none;
 }
 .pagination-container .pagination-wrapper .page-button-edge:last-child {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-left: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-left: 1px solid var(--gray-400);
+  border-right: 1px solid var(--gray-400);
 }
 
 @media (max-width: 768px) {
+  .pagination-container .pagination-wrapper .page-button {
+    min-width: 30px;
+  }
   .all-review-container .all-review-quick-info {
     flex-direction: column;
     gap: var(--spacing-5);

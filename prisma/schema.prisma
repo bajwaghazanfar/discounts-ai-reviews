@@ -9,8 +9,8 @@ generator client {
 // enough when changing adapters.
 // See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
 datasource db {
-  provider = "sqlite"
-  url      = "file:dev.sqlite"
+  provider = "postgresql"
+  url      = "postgresql://discount_ai_reviews_user:UabjuBWo0oQfeYJZ8CCy3MMz9V1ibGeD@dpg-d3dbnn2dbo4c73etg3kg-a.frankfurt-postgres.render.com/discount_ai_reviews"
 }
 
 model Session {
@@ -52,5 +52,5 @@ model Review {
 
   like Int
 
-  companyResponse String
+  companyResponse String?
 }
