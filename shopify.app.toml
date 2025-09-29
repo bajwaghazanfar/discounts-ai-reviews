@@ -2,7 +2,7 @@
 
 client_id = "f541255ab6a57d3e86e82f54addd3e85"
 name = "Discounts + Reviews (New)"
-application_url = "https://example.com"
+application_url = "https://discounts-ai-reviews.onrender.com"
 embedded = true
 
 [build]
@@ -24,7 +24,7 @@ api_version = "2025-10"
 scopes = "read_products,write_discounts,read_themes,write_themes,write_products,write_files,write_app_proxy"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://discounts-ai-reviews.onrender.com/api/auth" ]
 
 [app_proxy]
 url = "/my-app-proxy"

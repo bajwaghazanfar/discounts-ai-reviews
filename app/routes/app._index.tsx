@@ -124,7 +124,9 @@ export default function Index() {
         </Layout.Section>
 
         <Layout.Section>
-          {functions.length > 0 ? (
+          {functions != null &&
+          functions != undefined &&
+          functions.length > 0 ? (
             <BlockStack gap="400">
               {functions.map((item) => (
                 <Card key={item.id}>
@@ -189,12 +191,18 @@ export default function Index() {
               </Box>
             </BlockStack>
 
-            <DataTable
-              columnContentTypes={["text", "numeric", "text"]}
-              headings={["Product Id", "Review Count", "Action"]}
-              rows={tranformReviewRowData()}
-              totals={[]}
-            />
+            {reviews != undefined && reviews != null && reviews.length > 0 ? (
+              <DataTable
+                columnContentTypes={["text", "numeric", "text"]}
+                headings={["Product Id", "Review Count", "Action"]}
+                rows={tranformReviewRowData()}
+                totals={[]}
+              />
+            ) : (
+              <Text as="p" variant="bodyMd">
+                No revies found.
+              </Text>
+            )}
           </Card>
         </Layout.Section>
       </Layout>
