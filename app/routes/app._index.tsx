@@ -62,7 +62,11 @@ export default function Index() {
       console.log(x.discount);
     });
     const filteredDiscounts = discounts.nodes.filter((discount) => {
-      return discount.discount.appDiscountType.functionId === functionId;
+      if (!discount.discount.appDiscountType.functionId) {
+        return [];
+      } else {
+        return discount.discount.appDiscountType.functionId === functionId;
+      }
     });
 
     const mappedData = filteredDiscounts.map((discount) => {
