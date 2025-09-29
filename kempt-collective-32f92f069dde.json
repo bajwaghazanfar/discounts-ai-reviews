@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "kempt-collective",
+  "private_key_id": "32f92f069dde808effc4fbb9e60133d748d49891",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCIkdnyCjYJTo7R\n9wEifRfHZzwI0UHrn2Cg7itn20NPX1vKl+YWGZvnIxUgZvBxHP/2Z5dTeB1YOh40\nIB9LW3shn5yqu6JFWpTW8CXty0wNj9A7zX/sUB3PPpj5bEYLwXlTPJlfxpYeU/IO\nOL2t71D0nJPe/RrcQFtN5g8sl1IcTrs70DrES0TtLeajFztdb/3sTWSGoc1GF72b\nawyndmIQaal4cxb/v0v7BloUlCKr5U1JBPGi7XbUlMZBvG3mF5oc7FYyDdFbyyIl\npecnK/E278dftgMdHt9T6vyIN5R9WOY5T7TYwEk8cxuqPcRmN16ZJ86l133Pmkth\nl5Pp3uRDAgMBAAECggEAEWBRVSj0cCG1LUTauZsl8+KQMmUBmKuqHT/AeRHeUhKF\neNTz2vr+KZ3+maVPUW0Jqj3K9L1TKn8WibZOlQV6OLB4vAZsoptgVaqvgL59mjoi\nmgFPFe+po01JJG8gyG0g9TTAJP386rXuld2lUKSi7cSgUd5tVPnBRDuR0bAdK+mu\n9XJ/9//dxIrkIfTiIec/wcDVYEBmtLHnlRudgz5yIZJ8VzQXwas+pAB28x4Dyl0h\n2Cb6tNlnLD9IYcJm4pMQT2Jf+N5QZtRXO/PIMzHZyolI8TeZBnCJ38MVrQ9gghK+\ndt9orvd6yfqTsjWGpA5g9bboOhIZZ2YOvOU+cW3QPQKBgQC+JDk6PVPVH3ym6N+o\nZlb3jJy9MONwGqBADoAKErSAG8rRQvzkr9cMerwEbsWuRog7OSNbaatQ1GqGtJsn\nu8hqXmWHydIjCBNZ+GaTJJgqCvTVOLe9CdjrcSU1tKPO2H5b9ULxaEtC8oizb4On\n+ojuC2JjSc+0VDO2Vy59F6iuRQKBgQC333Bl7rm8JOyehXT9FvQh/T6gVR7/HUt8\nyFVqejulgToxskNfT8y7AOipMqXylKU6DoFMLZ6Ow1kIVZVNz39YMcHJiJk38I/K\nvyNLI2Ey1/MKg3KvMboF/XvR57M5HKAxF15VjIsjAsFDMfxaW3h/YSbCMqaeiAz6\nK8xhir9U5wKBgQCJhJtbMtW5837tHMn9+p51hd4quvwTrT4vdg1Gu8aOTQuAE8ni\nAAcxwGbRcehJJjwLUUTwLVm5KRguetsofpjxzXnzHpV7vrB4Rr6xNytSZQA0YkQJ\nVeDsT7XQxOgghtXE3nrfLEYakl0qIcH/sKRuPg+Xrd+qFagc/ari0ESwXQKBgHkO\ntuWlgsuIU/EaVKe80Qb/wJe28y1rkCObkgEEcPjKWBIYF5tM4rHMK2IaYn+Ptii/\nHAmXj2jW3GtMTXxpPKJIQBn7wUS/MSx/IzF5Haln3C/z0zHdP2hqN3c/YRQc8Krh\ng843NfPbAHrJEig7SN40jFwXFPQTBtg+tdUSkF3JAoGBAK+xkSH2fdLrGzc4Rno/\n6JwUVkWUDQ9/Iguc9CyuTyW+efbh5+4w9fuWNYl1NHyoH24I4opyEMJu58o0dkGG\nderwKvCUkT/QGvah+icWdHGyvMkTFl4ZOaqp4ppU+NLZFdB2xmqLlZLLVc5bp5Yv\n8d87yb+MoQ4u52RMp90/y+7x\n-----END PRIVATE KEY-----\n",
+  "client_email": "kempt-master@kempt-collective.iam.gserviceaccount.com",
+  "client_id": "106885206947418697421",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kempt-master%40kempt-collective.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

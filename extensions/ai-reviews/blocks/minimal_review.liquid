@@ -1,0 +1,51 @@
+{{ 'base.css' | asset_url | stylesheet_tag }}
+
+<div class="minimal-tp-reviews">
+  {% render 'stars' %}<button data-scroll-target="{{ section.settings.section-id }}" id="rated-amount"></button>
+</div>
+
+<script>
+  async function loadReviews() {
+    const container = document.getElementById("trustpilot-reviews");
+    const ratedAmount = document.querySelector("#rated-amount")
+  
+    try {
+   const response = await fetch("/apps/my-custom-path?product_id={{product.id}}", {
+    
+  headers: {
+    "Content-Type": "application/json"
+  },
+  method: "GET"
+  });
+      if (!response.ok) {
+        console.error("Proxy fetch failed:", response.statusText);
+        return;
+      }
+  
+    const res = await response.json()
+
+     ratedAmount.textContent = `Rated: ${res.data.averageRating}/5 from ${res.data.meta.totalItems} customers `
+  
+    } catch (error) {
+      console.error("Error loading reviews:", error);
+      container.innerHTML = "<p>Failed to load reviews.</p>";
+    }
+  }
+  
+  document.addEventListener("DOMContentLoaded", loadReviews);
+</script>
+
+{% schema %}
+  {
+    "name": "Minimal Reviews",
+    "target": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section-id",
+        "label": "Section ID",
+        "info": "Enter the section id to scroll to "
+      }
+    ]
+  }
+{% endschema %}

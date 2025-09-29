@@ -1,0 +1,148 @@
+<div class="all-review-container">
+  <div class="all-review-quick-info">
+    <div class="app-header">
+      <h1>Customer Reviews</h1>
+      <p>View our reviews.. most are postive..</p>
+    </div>
+
+    {% render 'review-summary' %}
+  </div>
+  <div class="all-review-main">
+    <div class="all-review-table"></div>
+  </div>
+</div>
+
+
+<script>
+        const insertTableReviewItem = (review, container) => {
+  const starToRender = 
+    review.rating == 5 ? `{% render 'stars-5' %}` : 
+    review.rating == 4 ? `{% render 'stars-4' %}` :
+    review.rating == 3 ? `{% render 'stars-3' %}` :
+    review.rating == 2 ? `{% render 'stars-2' %}` :
+    review.rating == 1 ? `{% render 'stars-1' %}` :
+    ''; 
+     const nameParts = review.author.split(' ');
+          const firstInitial = nameParts[0]?.charAt(0) || "";
+          const secondInitial = nameParts[1]?.charAt(0) || "";
+          const shortenedName = `${firstInitial}${secondInitial}`;
+        
+          const reviewCard = `    <div class="review-item">
+  ${review.imageUrl !== "" 
+    ? `<div class="review-item-image"><img src="${review.imageUrl}" alt="Review image"/></div>` 
+    : ''
+  }
+       <div class="review-content">
+        <div class="review-meta-info">
+          {% render 'avatar'
+            , name: "${shortenedName}" %}
+          <div class="review-user-info">
+            <h5>${review.author}</h5>
+            <p>Verified Purchase {% render "tick" %} </p>
+          </div>
+          <p> ${new Date(review.createdAt).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            })}</p>
+        </div>
+        <div class="review-item-star-rating">${starToRender}</div>
+        <div class="review-item-main-testimonial">
+        <h5>${review.title}</h5>
+          <p>${review.testimonial}</p>
+        </div>
+        <div class="review-item-tags">
+          <div class="review-tag">Purchased on Sep 14th, 2025</div>
+        </div>
+        <div class="review-card-footer">
+          <div class="review-card-action">
+            {% render 'like' %}
+            <p>Useful
+              <b>${review.like}</b>
+            </p>
+          </div>
+          <div class="review-card-action">
+            {% render 'share' %}
+            <p>Share</p>
+          </div>
+        </div>
+        ${review.companyResponse != "" ? `<div class="review-company-reply-container">
+        <div class="left">{% render 'link-to-child' %}</div>
+        <div class="right">
+          <div class="company-reply-content">
+            <div class="review-meta-info">
+           {% render 'avatar', logo:block.settings.company-reply-logo %}
+              <div class="review-user-info">
+                <h5>Reply From Store</h5>
+                <p>${new Date(review.createdAt).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric'
+                })}</p>
+              </div>
+            </div>
+            <div class="review-card-content">
+              <p>${review.companyResponse}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>`:""}
+  
+      </div>
+          `;
+          container.insertAdjacentHTML('beforeend', reviewCard);
+        };
+        
+        
+        async function loadReviews() {
+          try {
+            const response = await fetch("/apps/my-custom-path?product_id={{ product.id }}", {
+              headers: {
+                "Content-Type": "application/json"
+              }
+            });
+        
+            if (!response.ok) {
+              console.error("Proxy fetch failed:", response.statusText);
+              return;
+            }
+        
+            const res = await response.json();
+            const allReviews = res.data.product.reviews|| [];
+            const reviewTable = document.querySelector(".all-review-table")
+              allReviews.forEach((review) => {
+              insertTableReviewItem(review, reviewTable);
+            });
+  
+               const reviewItem = reviewTable.querySelectorAll(".review-item");
+            
+          } catch (error) {
+            console.error("Error loading reviews:", error);
+          }
+        }
+        
+        document.addEventListener("DOMContentLoaded", loadReviews);
+</script>
+
+
+{% schema %}
+  {
+    "name": "All Review",
+    "target": "section",
+    "stylesheet": "base.css",
+    "javascript": "base.js",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section-id",
+        "label": "Section ID",
+        "info": "Enter the section id to scroll to "
+      }, {
+        "type": "image_picker",
+        "id": "company-reply-logo",
+        "label": "Company Response Logo"
+      }
+    ]
+  }
+{% endschema %}

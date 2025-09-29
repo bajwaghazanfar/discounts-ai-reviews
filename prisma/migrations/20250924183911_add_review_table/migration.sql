@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "Review" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "rating" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "author" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "productId" TEXT NOT NULL
+);

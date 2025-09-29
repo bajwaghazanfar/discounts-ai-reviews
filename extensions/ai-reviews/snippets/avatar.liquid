@@ -1,0 +1,12 @@
+{% if logo != blank %}
+  <div class="avatar-container avatar-image">
+    <img
+      src="{{ logo | image_url: width: 80 }}"
+      alt="{{ logo.alt | escape }}"
+      loading="lazy">
+  </div>
+{% elsif name != blank %}
+  <div class="avatar-container">
+    {{ name }}
+  </div>
+{% endif %}

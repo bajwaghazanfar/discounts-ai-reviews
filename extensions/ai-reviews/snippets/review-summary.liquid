@@ -1,0 +1,125 @@
+{{ 'base.css' | asset_url | stylesheet_tag }}
+
+
+<div class="review-overview-container">
+  {% render 'loader-container' %}
+  <div class="review-overview-top">
+    <div class="left">
+      <h2 id="average-score"></h2>
+      <h4>Excellent</h4>
+      {% render 'stars' %}
+      <p>
+        <span id="review-amount"></span>
+        reviews</p>
+    </div>
+    <div class="right">
+      <div class="star-progress-bar-container">
+        <p>5-star</p>
+        <div class="star-progress-bar">
+          <span class="progress star-5" id="progress-star-5"></span>
+        </div>
+      </div>
+
+      <div class="star-progress-bar-container">
+        <p>4-star</p>
+        <div class="star-progress-bar">
+          <span class="progress star-4" id="progress-star-4"></span>
+        </div>
+      </div>
+
+      <div class="star-progress-bar-container">
+        <p>3-star</p>
+        <div class="star-progress-bar">
+          <span class="progress star-3" id="progress-star-3"></span>
+        </div>
+      </div>
+
+      <div class="star-progress-bar-container">
+        <p>2-star</p>
+        <div class="star-progress-bar">
+          <span class="progress star-2" id="progress-star-2"></span>
+        </div>
+      </div>
+
+      <div class="star-progress-bar-container">
+        <p>1-star</p>
+        <div class="star-progress-bar">
+          <span class="progress star-1" id="progress-star-1"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-overview-bottom"></div>
+</div>
+
+<script>
+  async function loadReviews() { 
+  const container = document.querySelectorAll(".review-overview-container")
+  
+  container.forEach(async(x)=>{
+      const loader = x.querySelector(".loader-container")
+    try {
+      const averageScore = x.querySelector("#average-score");
+      const reviewAmount = x.querySelector("#review-amount");
+      const progressStarOne = x.querySelector("#progress-star-1");
+      const progressStarTwo = x.querySelector("#progress-star-2");
+      const progressStarThree = x.querySelector("#progress-star-3");
+      const progressStarFour = x.querySelector("#progress-star-4");
+      const progressStarFive = x.querySelector("#progress-star-5");
+      
+      const response = await fetch("/apps/my-custom-path?product_id={{product.id}}&get_all_reviews=true", {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "GET"
+      });
+      
+      if (!response.ok) {
+        console.error("Proxy fetch failed:", response.statusText);
+        return;
+        container.style.display = "none";
+      }
+      
+      const res = await response.json();
+      const allReviews = res.data && res.data.product ? res.data.product.reviews : [];
+      const reviewCount = allReviews.length;
+  
+      if (reviewCount === 0) {
+        averageScore.textContent = 'N/A';
+        reviewAmount.textContent = '0';
+        return;
+      }
+      
+      averageScore.textContent = `${res.data.averageRating}`;
+      reviewAmount.textContent = `${reviewCount}`;
+      
+      const fiveStar = allReviews.filter((x) => x.rating === 5).length;
+      const fourStar = allReviews.filter((x) => x.rating === 4).length;
+      const threeStar = allReviews.filter((x) => x.rating === 3).length;
+      const twoStar = allReviews.filter((x) => x.rating === 2).length;
+      const oneStar = allReviews.filter((x) => x.rating === 1).length;
+      
+  
+      const fiveStarPercent = (fiveStar / reviewCount) * 100;
+      const fourStarPercent = (fourStar / reviewCount) * 100;
+      const threeStarPercent = (threeStar / reviewCount) * 100;
+      const twoStarPercent = (twoStar / reviewCount) * 100;
+      const oneStarPercent = (oneStar / reviewCount) * 100;
+      
+  
+      progressStarFive.style.width = `${fiveStarPercent}%`;
+      progressStarFour.style.width = `${fourStarPercent}%`;
+      progressStarThree.style.width = `${threeStarPercent}%`;
+      progressStarTwo.style.width = `${twoStarPercent}%`;
+      progressStarOne.style.width = `${oneStarPercent}%`;
+      loader.style.display = "none";
+      
+    } catch (error) {
+      console.error("Error loading reviews:", error);
+    }
+  })
+  }
+  
+  document.addEventListener("DOMContentLoaded", loadReviews);
+</script>

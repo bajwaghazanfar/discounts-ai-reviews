@@ -1,0 +1,180 @@
+{{ 'base.css' | asset_url | stylesheet_tag }}
+
+
+<div class="review-swiper-container">
+  <div class="app-header">
+    <h1>See what reviewers are saying...</h1>
+    <p>Thousands of reviews, at your fingertips...</p>
+  </div>
+  <div class="review-main"></div>
+  <div class="center">
+    <button class="tp-regular-button">See all
+      <span id="review-amount"></span>
+      reviews</button>
+  </div>
+     <div class="modal" id="companyReplyModal">
+  <div class="modal-content">
+    <div class="modal-content-header">
+      <button class="close_button" data-modal-target="companyReplyModal">
+        <span class="svg-wrapper">
+          {{- 'icon-close.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    </div>
+    <div class="modal-content-body">
+      <img src="{{ image | image_url: width: 1000 }}" alt="{{ image.alt | escape }}">
+    </div>
+  </div>
+</div>
+</div>
+<script defer src="
+https://cdn.jsdelivr.net/npm/swiper@12.0.2/swiper-bundle.min.js
+">
+</script>
+<link href="
+https://cdn.jsdelivr.net/npm/swiper@12.0.2/swiper-bundle.min.css
+" rel="stylesheet">
+
+<script>
+  const insertReviewCard = (review, container, isSwiperSlide = false) => {
+    const nameParts = review.author.split(' ');
+    const firstInitial = nameParts[0]?.charAt(0) || "";
+    const secondInitial = nameParts[1]?.charAt(0) || "";
+    const shortenedName = `${firstInitial}${secondInitial}`;
+  
+    const reviewCard = `
+      <div class="review-card ${isSwiperSlide ? "swiper-slide" : ""}">
+        <div class="review-meta-info">
+          {% render 'avatar', name: "${shortenedName}" %}
+          <div class="review-user-info">
+            <h5>${review.author}</h5>
+            <p>${new Date(review.createdAt).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            })}</p>
+          </div>
+        </div>
+        <div class="review-card-main">
+          <div class="flex-gap-medium">
+            {% render 'stars-5' %}
+            <span>{% render 'tick' %} Verified</span>
+          </div>
+          <div class="review-card-content">
+            <p>${review.testimonial}</p>
+          </div>
+        </div>
+        <div class="review-card-footer">
+          <div class="review-card-action">
+            {% render 'like' %}
+            <p>Useful <b>${review.like || 0}</b></p>
+          </div>
+          <div class="review-card-action">
+            {% render 'share' %}
+            <p>Share</p>
+          </div>
+        </div>
+       
+  
+    </div>
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', reviewCard);
+  };
+  
+  const instantiateSwiper = (containerSelector) => {
+    new Swiper(containerSelector, {
+      slidesPerView: 1.6,
+      spaceBetween: 20,
+      loop: true,
+      freeMode: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+        },
+      },
+    });
+  };
+  
+  async function loadReviews() {
+    try {
+      const response = await fetch("/apps/my-custom-path?product_id={{ product.id }}", {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+  
+      if (!response.ok) {
+        console.error("Proxy fetch failed:", response.statusText);
+        return;
+      }
+  
+      const res = await response.json();
+      const allReviews = res.data.product.reviews || [];
+      console.log(res,allReviews,"AHHH")
+      const reviewMain = document.querySelector(".review-main");
+  
+      // ---------- Mobile Swiper ----------
+      const mobileSwiperContainer = document.createElement("div");
+      mobileSwiperContainer.className = "swiper mobile-only";
+      
+      const swiperWrapper = document.createElement("div");
+      swiperWrapper.className = "swiper-wrapper";
+      mobileSwiperContainer.appendChild(swiperWrapper);
+  
+      allReviews.slice(0, 7).forEach((review) => {
+        insertReviewCard(review, swiperWrapper, true);
+      });
+  
+      reviewMain.appendChild(mobileSwiperContainer);
+  
+      // Swiper MUST be initialized after appending slides
+      instantiateSwiper(mobileSwiperContainer);
+  
+      // ---------- Desktop Static ----------
+      const desktopContainer = document.createElement("div");
+      desktopContainer.className = "desktop-only";
+  
+      allReviews.slice(0, 7).forEach((review) => {
+        insertReviewCard(review, desktopContainer, false);
+      });
+  
+      reviewMain.appendChild(desktopContainer);
+      const reviewAmount = document.querySelectorAll("#review-amount");
+      reviewAmount.forEach(x =>{x.textContent = `${res.data.meta.totalItems}` })
+
+      
+      
+      
+    } catch (error) {
+      console.error("Error loading reviews:", error);
+    }
+  }
+  
+  document.addEventListener("DOMContentLoaded", loadReviews);
+</script>
+
+
+{% schema %}
+  {
+    "name": "Review Swiper",
+    "target": "section",
+    "javascript":"base.js",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section-id",
+        "label": "Section ID",
+        "info": "Enter the section id to scroll to "
+      }, {
+        "type": "image_picker",
+        "id": "company-reply-logo",
+        "label": "Company Response Logo"
+      }
+    ]
+  }
+{% endschema %}

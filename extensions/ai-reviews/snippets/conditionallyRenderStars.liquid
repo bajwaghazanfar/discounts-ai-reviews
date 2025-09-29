@@ -1,0 +1,21 @@
+{% comment %} 
+      Fix: All comparisons must be strings ("5", "4", "3", etc.).
+{% endcomment %}
+
+{% if star == "5" %}
+  <p>{{ star }}</p>
+  {% render 'stars-5' %}
+{% elsif star == "4" %}
+  {% render 'stars-4' %}
+{% elsif star == "3" %}
+  {% render 'stars-3' %}
+{% elsif star == "2" %}
+  {% render 'stars-2' %}
+{% elsif star == "1" %}
+  {% render 'stars-1' %}
+{% else %}
+  <p></p>
+{% endif %}
+
+<p>{{ star }} star{% if star != "1" %}s{% endif %}
+</p>
