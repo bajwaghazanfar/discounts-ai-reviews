@@ -55,18 +55,15 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function Index() {
   const { functions, discounts, reviews } = useLoaderData<typeof loader>();
 
-  console.log(functions, discounts, reviews);
   const transformData = (functionId: string) => {
-    console.log(functionId, "FunctionIDDD");
     discounts.nodes.map((x) => {
       console.log(x.discount);
     });
     const filteredDiscounts = discounts.nodes.filter((discount) => {
-      if (!discount.discount.appDiscountType.functionId) {
-        return [];
-      } else {
-        return discount.discount.appDiscountType.functionId === functionId;
-      }
+      return (
+        discount.discount.appDiscountType != undefined &&
+        discount.discount.appDiscountType.functionId === functionId
+      );
     });
 
     const mappedData = filteredDiscounts.map((discount) => {
