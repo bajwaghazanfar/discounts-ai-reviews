@@ -55,7 +55,9 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function Index() {
   const { functions, discounts, reviews } = useLoaderData<typeof loader>();
 
+  console.log(functions, discounts, reviews);
   const transformData = (functionId: string) => {
+    console.log(functionId, "FunctionIDDD");
     const filteredDiscounts = discounts.nodes.filter((discount) => {
       return discount.discount.appDiscountType.functionId === functionId;
     });
@@ -126,7 +128,10 @@ export default function Index() {
         <Layout.Section>
           {functions != null &&
           functions != undefined &&
-          functions.length > 0 ? (
+          functions.length > 0 &&
+          discounts != null &&
+          discounts != undefined &&
+          discounts.nodes.length > 0 ? (
             <BlockStack gap="400">
               {functions.map((item) => (
                 <Card key={item.id}>
