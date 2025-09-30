@@ -91,7 +91,7 @@ b {
 }
 .minimal-tp-reviews svg {
   width: 100px;
-  height: 100px;
+  height: auto;
 }
 
 .minimal-tp-reviews button {
@@ -158,7 +158,7 @@ b {
   height: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--spacing-2);
   justify-content: space-between;
   align-items: center;
 }
@@ -191,7 +191,7 @@ b {
   background-color: #d2d2d2;
   position: relative;
   border-radius: 10px;
-  height: 10px;
+  height: 9px;
 }
 .review-overview-container
   .review-overview-top

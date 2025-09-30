@@ -1,0 +1,38 @@
+<style>
+  .review-minimal {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .review-minimal > div {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .review-minimal > div > svg {
+    fill: var(--primary-500);
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+  }
+  .review-minimal > div > p {
+    font-size: var(--font-size-xs) !important;
+    margin: 0 !important;
+    color: black;
+  }
+</style>
+
+<div class="review-minimal">
+  <div class="flex-row">
+    {% render 'single-star' %}
+    {% render 'single-star' %}
+    {% render 'single-star' %}
+    {% render 'single-star' %}
+    {% render 'single-star' %}
+    <p>Rated 4.8/5 by 1,192+ Happy Customers</p>
+  </div>
+</div>
