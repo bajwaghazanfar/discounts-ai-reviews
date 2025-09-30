@@ -261,6 +261,7 @@ b {
   color: black;
   font-weight: 500;
   margin: 0px;
+  margin-bottom: -3px;
 }
 
 .review-meta-info .review-user-info p {
