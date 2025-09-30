@@ -402,12 +402,7 @@ b {
   padding: 5px 10px;
   border-radius: 10px;
 }
-@media (max-width: 768px) {
-  .review-card {
-    border: 1px solid var(--gray-400);
-    border-radius: 10px;
-  }
-}
+
 .app-header {
   width: 100%;
   height: auto;
@@ -788,6 +783,13 @@ b {
   }
   .app-header h1 {
     font-size: var(--font-size-3xl);
+  }
+  .review-card {
+    border: 1px solid var(--gray-400);
+    border-radius: 10px;
+  }
+  .review-overview-container {
+    width: 100%;
   }
 }
 @media (min-width: 769px) {
